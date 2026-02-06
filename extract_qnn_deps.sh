@@ -11,7 +11,7 @@ function show_help() {
     echo "Error: QNN_SDK_ROOT is not set or invalid."
     echo ""
     echo "To use this project, you need the Qualcomm QNN SDK:"
-    echo "1. Download it from: https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk"
+    echo "1. Download Qualcomm QNN SDK v2.36.0.250627. "
     echo "2. Unzip the SDK to your local machine."
     echo "3. Run this script with the path to the SDK:"
     echo "   usage: sh $0 /path/to/qualcomm_qnn_sdk_root"

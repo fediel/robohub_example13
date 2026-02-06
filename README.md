@@ -33,8 +33,12 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
+### 3. Get Model File
+To use this project, please download the two model files from  
+[download](https://huggingface.co/dev2hf/robohub_example13)  
+and place them into the **resources** directory.  
 
-### 3. Get QNN Resource
+### 4. Get QNN Resource
 To use this project, you need the Qualcomm QNN SDK v2.36.0.250627.
 
 **Steps**: 
@@ -46,7 +50,7 @@ To use this project, you need the Qualcomm QNN SDK v2.36.0.250627.
 ./extract_qnn_deps.sh /path/your/qnn/2.36.0.250627
 ```
 
-### 4. Build Dependencies
+### 5. Build Dependencies
 ⚠️ **Prerequisite: infertoypy Installation**
 
 This project depends on **infertoypy**, which we have included in the opensource_qnn_sample/ folder as a compressed archive.
@@ -64,7 +68,7 @@ tar -zxvf opensource_qnn_sample/release_infertoy_*.tgz
 
 **Note**: Please do not skip this step, or the main application will fail to start.
 
-### 5. Usage
+### 6. Usage
 ```bash
 ./start.sh --source 0 --resolution 1280 720 --class-id 0 --port 3333 --save-dir ./save 
 ```
