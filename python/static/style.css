@@ -1,0 +1,813 @@
+/*
+==============================================================================
+ Copyright (c) 2026, Qualcomm Innovation Center, Inc. All rights reserved.
+
+ SPDX-License-Identifier: BSD-3-Clause
+
+==============================================================================
+*/
+
+/* =============================================================================
+   Global Styles & Reset
+   ============================================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    "Segoe UI", Tahoma, Geneva, Verdana, "Microsoft YaHei", Arial, sans-serif;
+  background: #f4f6fb;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* =============================================================================
+   Main Container
+   ============================================================================= */
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* =============================================================================
+   Header Section
+   ============================================================================= */
+
+.header {
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* =============================================================================
+   Status Bar
+   ============================================================================= */
+
+.status-bar {
+  background: #f8f9fa;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e9ecef;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.status-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 16px;
+}
+
+.status-label {
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Status value badge */
+.status-value {
+  padding: 8px 20px;
+  background: #fff;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+/* Active status styling with pulse animation */
+.status-value.active {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* =============================================================================
+   Detection Interval Control
+   ============================================================================= */
+
+.interval-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.interval-label {
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Number input for interval setting */
+.interval-input {
+  width: 80px;
+  padding: 8px 12px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.interval-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.interval-unit {
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Set interval button */
+.btn-set-interval {
+  padding: 8px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-set-interval:hover {
+  background: #5568d3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-set-interval:active {
+  transform: translateY(0);
+}
+
+/* =============================================================================
+   Control Buttons
+   ============================================================================= */
+
+.control-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+/* Base button styles */
+.btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  display: none; /* Hidden by default, shown with .btn-show class */
+}
+
+.btn.btn-show {
+  display: block;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Start button - green */
+.btn-start {
+  background: #28a745;
+  color: white;
+}
+
+.btn-start:hover {
+  background: #218838;
+}
+
+/* End button - red */
+.btn-end {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-end:hover {
+  background: #c82333;
+}
+
+/* =============================================================================
+   Main Content Layout
+   ============================================================================= */
+
+.main-content {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  height: calc(100vh - 220px);
+  min-height: 500px;
+}
+
+/* =============================================================================
+   Video Section
+   ============================================================================= */
+
+.video-section {
+  flex: 1;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.video-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  position: relative;
+}
+
+/* Video stream image element */
+.video-stream {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  aspect-ratio: 4 / 3;
+}
+
+.video-label {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+/* =============================================================================
+   Results Section
+   ============================================================================= */
+
+.results-section {
+  width: 550px;
+  min-width: 350px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 5px 25px 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.results-header {
+  font-size: 20px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+/* Results grid with flexbox wrapping */
+.results-grid {
+  display: flex;
+  gap: 15px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px 15px 0;
+  align-content: start;
+  flex-wrap: wrap;
+}
+
+/* Custom scrollbar styling */
+.results-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.results-grid::-webkit-scrollbar-track {
+  background: #e9ecef;
+  border-radius: 10px;
+}
+
+.results-grid::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+/* =============================================================================
+   Defect Result Cards
+   ============================================================================= */
+
+.defect-card {
+  width: calc(50% - 8px); /* Two columns in grid */
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.defect-card-image {
+  width: 100%;
+  flex: 1;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #e9ecef;
+}
+
+.defect-card-title {
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #495057;
+  text-align: start;
+  background: #f8f9fa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =============================================================================
+   Empty State
+   ============================================================================= */
+
+.empty-state {
+  margin: auto;
+  text-align: center;
+  padding: 60px 20px;
+  color: #adb5bd;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.empty-state-text {
+  font-size: 16px;
+}
+
+/* =============================================================================
+   Pagination Controls
+   ============================================================================= */
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-top: 1px solid #dee2e6;
+}
+
+.pagination-text {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.pagination-jump {
+  white-space: nowrap;
+}
+
+/* Page size selector and jump input shared styles */
+#pageSizeSelect,
+.jump-input {
+  padding: 5px 8px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  outline: none;
+  font-size: 13px;
+}
+
+.jump-input {
+  width: 50px;
+  text-align: center;
+}
+
+.jump-input:focus,
+#pageSizeSelect:focus {
+  border-color: #667eea;
+}
+
+/* Hide number input spinner arrows (Chrome, Safari, Edge, Opera) */
+.jump-input::-webkit-outer-spin-button,
+.jump-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Pagination navigation buttons */
+.pagination-btn {
+  padding: 10px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.pagination-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pagination-btn:disabled {
+  background: #dee2e6;
+  color: #adb5bd;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination-info {
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* =============================================================================
+   Image Viewer Modal
+   ============================================================================= */
+
+.image-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+.image-viewer.show {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.image-viewer-content {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Close button */
+.image-viewer-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.image-viewer-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+/* Image wrapper with scrolling for zoomed images */
+.image-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  /* Hint browser to optimize for scroll position changes */
+  will-change: scroll-position;
+}
+
+/* Image element with zoom transform */
+.image-viewer-content img {
+  /* Allow scale transform to properly trigger scrollbars */
+  max-width: none;
+  max-height: none;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 1px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+  /* Initial display size constraints */
+  max-width: 90vw;
+  max-height: calc(100vh - 150px);
+}
+
+/* Image metadata and controls container */
+.image-extra-info {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Image information display */
+.image-viewer-info {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+
+/* =============================================================================
+   Zoom Controls
+   ============================================================================= */
+
+.image-viewer-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.zoom-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.zoom-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Reset zoom button (displays percentage) */
+.zoom-reset {
+  width: 60px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =============================================================================
+   Capture Button (Optional/Unused)
+   ============================================================================= */
+
+.capture-btn-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btn-capture {
+  background: #007bff;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.btn-capture:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+}
+
+.btn-capture:active {
+  transform: translateY(0);
+}
+
+/* =============================================================================
+   Toast Notification
+   ============================================================================= */
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  display: none;
+  animation: slideIn 0.3s ease;
+  z-index: 1000;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Success notification - green border */
+.notification.success {
+  border-left: 4px solid #28a745;
+}
+
+/* Error notification - red border */
+.notification.error {
+  border-left: 4px solid #dc3545;
+}
+
+.notification.show {
+  display: block;
+}
+
+/* =============================================================================
+   Responsive Design - Tablet & Mobile
+   ============================================================================= */
+
+/* Medium screens (tablets) */
+@media (max-width: 1200px) {
+  .main-content {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .video-section {
+    min-height: 400px;
+  }
+
+  .results-section {
+    width: 100%;
+    min-height: 300px;
+  }
+
+  .status-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 768px) {
+  .status-bar {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .interval-control {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .control-buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    flex: 1;
+  }
+
+  .results-section {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* Maintain two-column grid on mobile */
+  .defect-card {
+    width: calc(50% - 8px);
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .pagination-controls {
+    flex-wrap: wrap;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  /* Single column grid on very small screens */
+  .defect-card {
+    width: 100%;
+  }
+
+  .interval-input {
+    width: 70px;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+
+  .pagination-btn {
+    padding: 8px 15px;
+    font-size: 13px;
+  }
+}

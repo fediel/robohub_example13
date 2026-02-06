@@ -1,0 +1,207 @@
+<!--
+==============================================================================
+ Copyright (c) 2026, Qualcomm Innovation Center, Inc. All rights reserved.
+
+ SPDX-License-Identifier: BSD-3-Clause
+
+==============================================================================
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camera Inspection System</title>
+    <!-- Static CSS file reference -->
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
+  <body>
+    <!-- Main container wrapper -->
+    <div class="container">
+      <!-- Header section with title -->
+      <div class="header">
+        <h1>Camera Inspection System</h1>
+        <div style="font-size: 14px; opacity: 0.9">
+          Real-time Defect Detection
+        </div>
+      </div>
+
+      <!-- Status bar with controls -->
+      <div class="status-bar">
+        <!-- Status display area -->
+        <div class="status-info">
+          <span class="status-label">Inspection Status:</span>
+          <span class="status-value" id="statusValue">IDLE</span>
+        </div>
+
+        <!-- Control buttons section -->
+        <div class="control-buttons">
+          <!-- Detection interval control -->
+          <div class="interval-control">
+            <span class="interval-label">Detection Interval:</span>
+            <input
+              type="number"
+              id="intervalInput"
+              class="interval-input"
+              min="0.1"
+              step="0.1"
+              placeholder=""
+            />
+            <span class="interval-unit">seconds</span>
+            <button
+              class="btn btn-set-interval btn-show"
+              onclick="setDetInterval()"
+            >
+              Save
+            </button>
+          </div>
+
+          <!-- Start inspection button -->
+          <button
+            id="btn-start"
+            class="btn btn-start btn-show"
+            onclick="startPatrol()"
+          >
+            Start Inspection
+          </button>
+
+          <!-- End inspection button -->
+          <button id="btn-end" class="btn btn-end" onclick="endPatrol()">
+            End Inspection
+          </button>
+        </div>
+      </div>
+
+      <!-- Main content area with video and results -->
+      <div class="main-content">
+        <!-- Video stream section -->
+        <div class="video-section">
+          <div class="video-container">
+            <!-- Real-time camera feed -->
+            <!--  src="http://192.168.112.89:3333/video_feed" |  src="{{ url_for('video_feed') }}"-->
+            <img
+              src="{{ url_for('video_feed') }}"
+              alt="Real-time Camera Feed"
+              class="video-stream"
+            />
+          </div>
+        </div>
+
+        <!-- Detection results section -->
+        <div class="results-section">
+          <!-- Results header with count -->
+          <div class="results-header">
+            Detection Results <span id="resultCount"></span>
+          </div>
+
+          <!-- Results grid container -->
+          <div class="results-grid" id="resultsGrid">
+            <!-- Empty state placeholder -->
+            <div class="empty-state">
+              <div class="empty-state-icon">📋</div>
+              <div class="empty-state-text">No detection results yet</div>
+            </div>
+          </div>
+
+          <!-- Pagination controls -->
+          <div class="pagination" id="pagination">
+            <!-- Page navigation buttons -->
+            <div class="pagination-controls">
+              <button
+                class="pagination-btn"
+                id="prevPage"
+                onclick="changePage(-1)"
+              >
+                Previous
+              </button>
+              <span class="pagination-info" id="pageInfo">Page 1</span>
+              <button
+                class="pagination-btn"
+                id="nextPage"
+                onclick="changePage(1)"
+              >
+                Next
+              </button>
+            </div>
+
+            <!-- Items per page selector -->
+            <div class="pagination-size">
+              <select id="pageSizeSelect" onchange="changePageSize()">
+                <option value="10">10 / Page</option>
+                <option value="20" selected>20 / Page</option>
+                <option value="50">50 / Page</option>
+                <option value="100">100 / Page</option>
+              </select>
+            </div>
+
+            <!-- Jump to page input -->
+            <div class="pagination-jump">
+              <span class="pagination-text">Go to</span>
+              <input
+                type="number"
+                id="jumpPageInput"
+                class="jump-input"
+                min="1"
+                onkeydown="handleJumpKeydown(event)"
+                onblur="handleJumpKeydown({key:'Enter'})"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image viewer modal -->
+    <div class="image-viewer" id="imageViewer" onclick="closeImageViewer()">
+      <!-- Close button -->
+      <button class="image-viewer-close" onclick="closeImageViewer()">×</button>
+
+      <!-- Viewer content wrapper -->
+      <div class="image-viewer-content" onclick="event.stopPropagation()">
+        <div class="image-wrapper" id="imageWrapper">
+          <img src="" alt="Full-size View" id="viewerImage" />
+        </div>
+      </div>
+
+      <!-- Image information and controls -->
+      <div class="image-extra-info" onclick="event.stopPropagation()">
+        <!-- Image metadata display -->
+        <div class="image-viewer-info" id="viewerInfo"></div>
+
+        <!-- Zoom controls -->
+        <div class="image-viewer-controls">
+          <button
+            class="zoom-btn"
+            onclick="zoomImage(-0.2)"
+            title="Zoom out, shortcut: -"
+          >
+            −
+          </button>
+          <button
+            class="zoom-btn zoom-reset"
+            onclick="resetZoom()"
+            title="Reset zoom, shortcut: 0"
+          >
+            100%
+          </button>
+          <button
+            class="zoom-btn"
+            onclick="zoomImage(0.2)"
+            title="Zoom in, shortcut: +"
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification toast -->
+    <div class="notification" id="notification">
+      <span id="notificationText"></span>
+    </div>
+
+    <!-- JavaScript file reference -->
+    <script src="../static/index.js"></script>
+  </body>
+</html>
