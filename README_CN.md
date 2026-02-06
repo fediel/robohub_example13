@@ -38,7 +38,7 @@ pip3 install -r requirements.txt
 使用本项目需要先下载模型文本，并将它们移动到目录 **resources** 下。
 [下载](https://huggingface.co/dev2hf/robohub_example13)  
 
-### 3. 获取 QNN 资源
+### 4. 获取 QNN 资源
 使用本项目需先获取高通（Qualcomm）QNN SDK v2.36.0.250627。
 
 **步骤**：
@@ -50,7 +50,7 @@ pip3 install -r requirements.txt
 ./extract_qnn_deps.sh /path/your/qnn/2.36.0.250627
 ```
 
-### 4. 构建依赖项
+### 5. 构建依赖项
 ⚠️ **前置条件：infertoypy 安装**
 
 本项目依赖**infertoypy**，该依赖已以压缩包形式包含在 opensource_qnn_sample / 目录下。
@@ -69,7 +69,7 @@ cd release_infertoy
 
 **注意**：请勿跳过此步骤，否则主应用程序将无法启动。
 
-### 5. 使用方法
+### 6. 使用方法
 ```bash
 ./start.sh --source 0 --resolution 1280 720 --class-id 0 --port 3333 --save-dir ./save
 ```
