@@ -1,6 +1,6 @@
-# robohub_example13
+# SegmentAnything
 
-SegmentAnything
+robohub example 13.
 
 ## Features
 - **User-Friendly Pythonic API**: A high-level Python interface that abstracts complex QNN C++ examples, allowing for rapid prototyping on Snapdragon platforms.
